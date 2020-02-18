@@ -1,0 +1,44 @@
+{
+  "FileFormatVersion": 1,
+  "Origin": {
+    "Case": "CommandOrigin",
+    "Fields": [
+      {
+        "Inputs": [
+          {
+            "RelativePath": "..\\code\\scripts\\EvaluateClassDensity.R",
+            "Hash": "38F3A0E207869FB81A7C6E2B3DE9A28450A54D0158D4EA539AC5FAB38EF758E2E546E4CC070260EA72CA6D70C61A418BD2549A662C61218B97996C40F5D9FEA7"
+          },
+          {
+            "RelativePath": "..\\data\\bengaliai-cv19\\",
+            "Hash": "D09946D9348B9135927E3C69F22AFB441F5EA040995229E4119F6B3B6DC10537DE1BF1FA6850A5BCFA1C90849BDA14AEC20B69EC410422F558CDA8CBE0A5362F"
+          }
+        ],
+        "Outputs": [
+          {
+            "RelativePath": "GraphemeRootPriorProbs.csv",
+            "Hash": "CD94E4AF6357037346A23B7BA9AE5CE8105D274391732C3729013C6238897E191C3191804E1D6036B202C83117C0F6B62FC4DD4A29790210700D6BF25CADA473"
+          },
+          {
+            "RelativePath": "VowelDiacriticPriorProbs.csv",
+            "Hash": "7DA9A8BAB433D3F045F53CF860E305D405E527D790CB680B37D89412D39BBDE5ACB76AC758DC137D1AA21A3EFE435B0AD903AFEB2EDC2A2B4B6328234EEEB7D3"
+          },
+          {
+            "RelativePath": "ConsonantDiacriticPriorProbs.csv",
+            "Hash": "1A2C9654B7AC40AC99EA308CF9EA23C71C5FD04AE15AFF867921DA7D12C1CB1E6273844C01BD0ACC4F10C622AE1E4A09CD6BCB64820F7A3A99C9900241474F2B"
+          }
+        ],
+        "ResourceGroups": [],
+        "SuccessfulExitCodes": [
+          0
+        ],
+        "OutputIndex": 1,
+        "WorkingDirectory": ".",
+        "Command": "RScript $in1 $in2\\train.csv $out1 $out2 $out3",
+        "Signature": "7EC72FE536A5FEB2DCB405A5E89C7D77D9214243",
+        "OutputsCleanDisabled": false
+      }
+    ]
+  },
+  "IsTracked": false
+}
