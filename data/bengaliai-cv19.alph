@@ -1,0 +1,36 @@
+{
+  "FileFormatVersion": 1,
+  "Origin": {
+    "Case": "CommandOrigin",
+    "Fields": [
+      {
+        "Inputs": [
+          {
+            "RelativePath": "..\\code\\scripts\\unzip.ps1",
+            "Hash": "D3AD4752717F28569CBD98FC62AF68B69CD2EDAA4ABC11C923EAE8766A2C44939086AF795F1B2DFA8F4A1046A8ED54EF57D8795AC48FFF1CA4431C38427AED4F"
+          },
+          {
+            "RelativePath": "bengaliai-cv19.zip",
+            "Hash": "80E9D9DA7D77BF1D359C964CB25C0F4A6E5F8EAE637769EA2F7714C8BC253FA9ADCF3FC7A43821F5DADEB0BE26CEE817522AC0FF2F9AB1A357B61BFBABEA0092"
+          }
+        ],
+        "Outputs": [
+          {
+            "RelativePath": "bengaliai-cv19\\",
+            "Hash": "D09946D9348B9135927E3C69F22AFB441F5EA040995229E4119F6B3B6DC10537DE1BF1FA6850A5BCFA1C90849BDA14AEC20B69EC410422F558CDA8CBE0A5362F"
+          }
+        ],
+        "ResourceGroups": [],
+        "SuccessfulExitCodes": [
+          0
+        ],
+        "OutputIndex": 0,
+        "WorkingDirectory": ".",
+        "Command": "powershell.exe -File $in1 $in2 $out1",
+        "Signature": "79FE2CF2BA1B9B1BE2ECB2008A6394A72FC09278",
+        "OutputsCleanDisabled": false
+      }
+    ]
+  },
+  "IsTracked": false
+}

@@ -1,0 +1,6 @@
+// ---alpheus-managed-start---
+**/*.hash
+.alpheus/storage
+// ---alpheus-managed-end---
+help
+venv-gpu

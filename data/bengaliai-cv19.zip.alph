@@ -1,0 +1,27 @@
+{
+  "FileFormatVersion": 1,
+  "Origin": {
+    "Case": "CommandOrigin",
+    "Fields": [
+      {
+        "Inputs": [],
+        "Outputs": [
+          {
+            "RelativePath": "bengaliai-cv19.zip",
+            "Hash": "80E9D9DA7D77BF1D359C964CB25C0F4A6E5F8EAE637769EA2F7714C8BC253FA9ADCF3FC7A43821F5DADEB0BE26CEE817522AC0FF2F9AB1A357B61BFBABEA0092"
+          }
+        ],
+        "ResourceGroups": [],
+        "SuccessfulExitCodes": [
+          0
+        ],
+        "OutputIndex": 0,
+        "WorkingDirectory": ".",
+        "Command": "kaggle competitions download -c bengaliai-cv19",
+        "Signature": "0838F237CBED5A5926A7C1B18A7D9DB4B3E01EBD",
+        "OutputsCleanDisabled": false
+      }
+    ]
+  },
+  "IsTracked": false
+}
