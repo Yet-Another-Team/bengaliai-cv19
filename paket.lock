@@ -1,0 +1,13 @@
+GENERATE-LOAD-SCRIPTS: ON
+RESTRICTION: == net45
+NUGET
+  remote: https://api.nuget.org/v3/index.json
+    Angara.Serialization (0.3)
+    Angara.Statistics (0.1.4)
+      Angara.Serialization
+    Angara.Table (0.3.3)
+      Angara.Serialization (>= 0.3 < 0.4)
+      Angara.Statistics (>= 0.1 < 1.0)
+      System.Collections.Immutable (1.1.36)
+    FSharp.Compiler.Tools (10.2.3)
+    System.Collections.Immutable (1.1.36)

@@ -1,0 +1,40 @@
+{
+  "FileFormatVersion": 1,
+  "Origin": {
+    "Case": "CommandOrigin",
+    "Fields": [
+      {
+        "Inputs": [
+          {
+            "RelativePath": "..\\packages\\FSharp.Compiler.Tools\\tools\\fsiAnyCpu.exe",
+            "Hash": "F08CBA03841C523C8FA81596E7A5D4B26B795A5F4DC2710C8279A70732B9C46A7E432F5BFAACE37DBA1EBD9844A4BF44105F20D91F50DCF48560C3342365F10C"
+          },
+          {
+            "RelativePath": "..\\code\\scripts\\GenerateCVSplits.fsx",
+            "Hash": "6A68B9BA0C98CDBCA655B004535EC675D81AF1958835B027A780D8F17193E5FE6F3D75BED230895CFCFF5B6BF53C9B6CF31132581BED1722D1D1B436A2E45AC5"
+          },
+          {
+            "RelativePath": "bengaliai-cv19\\",
+            "Hash": "D09946D9348B9135927E3C69F22AFB441F5EA040995229E4119F6B3B6DC10537DE1BF1FA6850A5BCFA1C90849BDA14AEC20B69EC410422F558CDA8CBE0A5362F"
+          }
+        ],
+        "Outputs": [
+          {
+            "RelativePath": "5foldCvSplits\\",
+            "Hash": "CF83E1357EEFB8BDF1542850D66D8007D620E4050B5715DC83F4A921D36CE9CE47D0D13C5D85F2B0FF8318D2877EEC2F63B931BD47417A81A538327AF927DA3E"
+          }
+        ],
+        "ResourceGroups": [],
+        "SuccessfulExitCodes": [
+          0
+        ],
+        "OutputIndex": 0,
+        "WorkingDirectory": ".",
+        "Command": "$in1 $in2 $in3\\train.csv $out1 5",
+        "Signature": "918BFFE051A08FC2BDE9252856CAD18C641FF8BF",
+        "OutputsCleanDisabled": false
+      }
+    ]
+  },
+  "IsTracked": false
+}

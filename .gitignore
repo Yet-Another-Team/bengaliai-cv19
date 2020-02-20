@@ -4,3 +4,6 @@
 // ---alpheus-managed-end---
 help
 venv-gpu
+.paket
+packages
+paket-files

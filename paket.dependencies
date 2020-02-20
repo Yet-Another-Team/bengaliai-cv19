@@ -1,0 +1,7 @@
+source https://api.nuget.org/v3/index.json
+
+framework: net45
+generate_load_scripts: true
+
+nuget FSharp.Compiler.Tools
+nuget Angara.Table
