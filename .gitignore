@@ -1,11 +1,14 @@
 // ---alpheus-managed-start---
 **/*.hash
 .alpheus/storage
+data/5foldCvSplits/
 data/bengaliai-cv19.zip
 data/bengaliai-cv19/
 // ---alpheus-managed-end---
 help
 venv-gpu
 .paket
+.ionide
+.vscode
 packages
 paket-files
