@@ -1,6 +1,8 @@
 // ---alpheus-managed-start---
 **/*.hash
 .alpheus/storage
+data/bengaliai-cv19.zip
+data/bengaliai-cv19/
 // ---alpheus-managed-end---
 help
 venv-gpu
