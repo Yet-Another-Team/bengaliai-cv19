@@ -1,6 +1,10 @@
 // ---alpheus-managed-start---
 **/*.hash
 .alpheus/storage
+data/5foldCvSplits/*.consonant_stats.csv
+data/5foldCvSplits/*.root_stats.csv
+data/5foldCvSplits/*.val_ids.csv
+data/5foldCvSplits/*.vowel_stats.csv
 data/bengaliai-cv19.zip
 data/bengaliai-cv19/
 // ---alpheus-managed-end---
