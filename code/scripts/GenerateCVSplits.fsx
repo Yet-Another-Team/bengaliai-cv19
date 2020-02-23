@@ -145,10 +145,13 @@ printfn (if Environment.Is64BitProcess then "64-bit" else "32-bit")
 let args = Environment.GetCommandLineArgs()
 
 let inputCSV = args.[2]
-let outputDir = args.[3]
-let foldsCount = System.Int32.Parse(args.[4])
+let outputValIdsPattern = args.[3]
+let output_grapheme_root_StatsPattern = args.[4]
+let output_vowel_diacritic_StatsPattern = args.[5]
+let output_consonant_diacritic_StatsPattern = args.[6]
+let foldsCount = System.Int32.Parse(args.[7])
 
-printfn "Will read %s and putting %d fold splits into %s" inputCSV foldsCount outputDir 
+// printfn "Will read %s and putting %d fold splits into %s" inputCSV foldsCount outputDir 
 
 type Sample = {
     image_id: string
@@ -190,7 +193,7 @@ let dumpFold idx fold =
     let (valSamples:Sample seq),(valCounters:ClsCounters),(totCounters:ClsCounters) = fold
     let valIds = Seq.map idExtractor valSamples
     let valIdsStr = sprintf "image_id\r\n%s" (String.concat "\r\n" valIds)
-    let valFileName = Path.Combine(outputDir,sprintf "%d.val_ids.csv" idx)
+    let valFileName = outputValIdsPattern.Replace("*",sprintf "%d" idx) 
     File.WriteAllText(valFileName,valIdsStr)
 
     let statsFolder totalCounterMap stats clsIdx valSamples =
@@ -203,13 +206,13 @@ let dumpFold idx fold =
             }
         newStat::stats
     
-    let dumpStatsFile classificationIdx suffix =
-        let rootStats = Map.fold (statsFolder totCounters.[classificationIdx]) [] valCounters.[classificationIdx]
-        let rootStatsFile = Path.Combine(outputDir,sprintf "%d.%s.csv" idx suffix)
-        Table.Save(Table.OfRows<Stats>(rootStats),rootStatsFile)
-    dumpStatsFile 0 "grapheme_root_stats"
-    dumpStatsFile 1 "vowel_diacritic_stats"
-    dumpStatsFile 2 "consonant_diacritic_stats"
+    let dumpStatsFile classificationIdx (pattern:string) =
+        let statsRes = Map.fold (statsFolder totCounters.[classificationIdx]) [] valCounters.[classificationIdx]
+        let statsFile = pattern.Replace("*",sprintf "%d" idx)
+        Table.Save(Table.OfRows<Stats>(statsRes),statsFile)
+    dumpStatsFile 0 output_grapheme_root_StatsPattern
+    dumpStatsFile 1 output_vowel_diacritic_StatsPattern
+    dumpStatsFile 2 output_consonant_diacritic_StatsPattern
 
 folds |> List.iteri dumpFold
 

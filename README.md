@@ -73,7 +73,9 @@ I'll do that by outputting different files for different folds, each file will c
 I'll use the F# script as I'm more confident in F#, but you can do it in python or in any other CLI scripting tool.
 
 ```shell
-alpheus build -d ..\packages\FSharp.Compiler.Tools\tools\fsiAnyCpu.exe -d ..\code\scripts\GenerateCVSplits.fsx -d bengaliai-cv19\ -o .\5foldCvSplits\ "$in1 $in2 $in3\train.csv $out1 5"
+(venv-gpu) C:\ML\bengaliai-cv19\data>alpheus build -d ..\packages\FSharp.Compiler.Tools\tools\fsiAnyCpu.exe -d ..\code\scripts\GenerateCVSplits.fsx -d bengaliai-cv19\ -o .\5foldCvSplits\*.val_ids.csv -o .\5foldCvSplits\*.root_stats.csv -o .\5foldCvSplits\*.vowel_stats.csv -o .\5foldCvSplits\*.consonant_stats.csv "$in1 $in2 $in3\train.csv $out1 $out2 $out3 $out4 5"
 ```
+
+ > Notice: We produce the outputs with asteriks (*) in the path. It means that the output contains several files matching the pattern. That's called vector artefact.
 
  > Notice: We fixed number of folds equal to 5 (script parameter) in the build command above.
