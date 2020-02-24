@@ -8,6 +8,7 @@ data/5foldCvSplits/*.vowel_stats.csv
 data/bengaliai-cv19.zip
 data/bengaliai-cv19/
 // ---alpheus-managed-end---
+__pycache__
 help
 venv-gpu
 .paket
