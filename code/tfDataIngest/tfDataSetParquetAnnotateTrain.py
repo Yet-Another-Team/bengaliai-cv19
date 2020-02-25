@@ -6,7 +6,7 @@ import os
 import numpy as np
 from glob import glob
 
-def annottate(dataset, labelFileName):
+def annotate(dataset, labelFileName):
     root = dict()
     vowel = dict()
     consonant = dict()

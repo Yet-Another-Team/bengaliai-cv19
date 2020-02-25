@@ -10,7 +10,7 @@ if __name__ == "__main__":
     print("Parquet files {0}".format(len(files)))
     print("First is {0}".format(files[0]))
     ds = tfDataSetParquet.create_parquet_dataset(files)
-    annotatedDs = tfDataSetParquetAnnotateTrain.annottate(ds, "data/bengaliai-cv19/train.csv")
+    annotatedDs = tfDataSetParquetAnnotateTrain.annotate(ds, "data/bengaliai-cv19/train.csv")
 
     
     a = 0
