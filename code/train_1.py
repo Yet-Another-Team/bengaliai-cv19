@@ -11,7 +11,7 @@ inputDataDir = sys.argv[1]
 validationFile = sys.argv[2]
 experiment_output_dir = sys.argv[3]
 dropoutRate = 0.2
-batchSize = 8
+batchSize = 4
 
 # valDf = pd.read_csv(validationFile)
 # valIds = set(valDf.image_id)
@@ -25,13 +25,17 @@ if __name__ == "__main__":
     N = len(pd.read_csv(trainLabelsFileName))
     print("There are {0} training samples in total".format(N))
 
-    print("Parquet files {0}".format(len(dataFileNames)))
+    print("Parquet files count is {0}".format(len(dataFileNames)))
     print("First is {0}".format(dataFileNames[0]))
-    ds = tfDsParquet.create_parquet_dataset(dataFileNames)
-    ds = tfDsParquetAnnotation.annotate(ds,trainLabelsFileName)    
+
+    def constructAllSamplesDs():
+        ds = tfDsParquet.create_parquet_dataset(dataFileNames)
+        ds = tfDsParquetAnnotation.annotate(ds,trainLabelsFileName)  
+        return ds  
+
 
     # reshaping to match the input shape
-    def prepareInput(ident,labels,pixels):
+    def prepareInput(_,labels,pixels):
         pixels = tf.cast(pixels, tf.float16)
         root,vowel,consonant = tf.unstack(labels,3)
         root = tf.one_hot(root, 168, dtype=tf.float16)
@@ -58,52 +62,50 @@ if __name__ == "__main__":
         return not(tf.py_function(inValidationFilter, [ident], (tf.bool)))
     
     #trDs = ds.filter(inTrainFilter)
-    trDs = ds
-    trDs = trDs.map(prepareInput, num_parallel_calls=1) #tf.data.experimental.AUTOTUNE
-    #trDs = trDs.shuffle(8192,seed=123678, reshuffle_each_iteration=True)
-    trDs = trDs.batch(batchSize)
-    #trDs = trDs.prefetch(8)
+    trDs = constructAllSamplesDs()
+    trDs = trDs.map(prepareInput) #tf.data.experimental.AUTOTUNE
     trDs = trDs.repeat()
+    trDs = trDs.shuffle(8192,seed=123678, reshuffle_each_iteration=True)
+    trDs = trDs.batch(batchSize)
+    trDs = trDs.prefetch(64)
 
     # valDs = ds.filter(inValFilter)
     # valDs = valDs.map(prepareInput, num_parallel_calls=1)    
     # valDs = valDs.batch(batchSize)
 
-    print("DataSet is {0}".format(ds))
+    print("Training dataSet is {0}".format(trDs))
 
     model = GetModel(dropoutRate)
 
     print("Model constructed")
     print(model.summary())
     
-    def rootLoss(y_true, y_pred):
-        #print("root loss {0} {1}".format(y_true,y_pred))
+    def catCeFromLogitsDoubled(y_true, y_pred):        
         return tf.keras.losses.categorical_crossentropy(y_true, y_pred, from_logits=True)*2.0
-    def vowelLoss(y_true, y_pred):
-        #print("vowelLoss loss {0} {1}".format(y_true,y_pred))
-        return tf.keras.losses.categorical_crossentropy(y_true, y_pred, from_logits=True)
-    def consonantLoss(y_true, y_pred):
-        #print("consonant loss {0} {1}".format(y_true,y_pred))
-        return tf.keras.losses.categorical_crossentropy(y_true, y_pred, from_logits=True)
+    def catCeFromLogits(y_true, y_pred):        
+        return tf.keras.losses.categorical_crossentropy(y_true, y_pred, from_logits=True)    
 
-    def recall_for_logits(y_true, y_pred, sample_weight=None):
-        probs = tf.sigmoid(y_pred)
-        return tf.keras.metrics.Recall(y_true, probs, sample_weight, thresholds=0.5)              
+    class RecallForLogits(tf.keras.metrics.Recall):
+        def __init__(self, name='recall', **kwargs):
+            super(RecallForLogits, self).__init__(name=name, **kwargs)            
 
+        def update_state(self, y_true, y_pred, sample_weight=None):
+            probs = tf.sigmoid(y_pred)
+            super().update_state(y_true, probs, sample_weight)            
+
+        def result(self):
+            return super().result()
+    
     model.compile(
           #optimizer=tf.keras.optimizers.SGD(momentum=.5,nesterov=True, clipnorm=1.),
           #optimizer=tf.keras.optimizers.RMSprop(),
           optimizer=tf.keras.optimizers.Adam(learning_rate=1e-4),
           loss= {
-              "root":rootLoss,
-              "vowel":vowelLoss,
-              "consonant":consonantLoss
+              "root":catCeFromLogitsDoubled,
+              "vowel":catCeFromLogits,
+              "consonant":catCeFromLogits
           },
-          metrics={
-              "root":recall_for_logits,
-              "vowel":recall_for_logits,
-              "consonant":recall_for_logits
-            }
+          metrics=[RecallForLogits()]
           )
     print("model compiled")
 
@@ -114,7 +116,7 @@ if __name__ == "__main__":
         # Interrupt training if `val_loss` stops improving for over 2 epochs
         #tf.keras.callbacks.EarlyStopping(patience=int(7), monitor='loss',mode='min'),
         # Write TensorBoard logs to `./logs` directory
-        tf.keras.callbacks.TensorBoard(log_dir=experiment_output_dir, histogram_freq = 0, profile_batch=0),
+        # tf.keras.callbacks.TensorBoard(log_dir=experiment_output_dir, histogram_freq = 0, profile_batch=0),
         tf.keras.callbacks.ModelCheckpoint(filepath=os.path.join(experiment_output_dir,"weights.{epoch:02d}-{loss:.5f}.hdf5"),verbose=True, save_weights_only=True),
         tf.keras.callbacks.TerminateOnNaN(),
         csv_logger,
@@ -128,7 +130,7 @@ if __name__ == "__main__":
       callbacks=callbacks,
       shuffle=False, # dataset is shuffled explicilty
       #steps_per_epoch= (N-len(valIds))//batchSize ,
-      steps_per_epoch= N//batchSize ,
+      steps_per_epoch= N//batchSize,
       #epochs=int(10000)
       epochs = 10
       )
