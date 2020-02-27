@@ -7,6 +7,7 @@ data/5foldCvSplits/*.val_ids.csv
 data/5foldCvSplits/*.vowel_stats.csv
 data/bengaliai-cv19.zip
 data/bengaliai-cv19/
+venv-gpu/
 // ---alpheus-managed-end---
 __pycache__
 help

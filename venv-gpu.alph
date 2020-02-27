@@ -1,0 +1,13 @@
+{
+  "FileFormatVersion": 1,
+  "Origin": {
+    "Case": "SourceOrigin",
+    "Fields": [
+      {
+        "RelativePath": "venv-gpu\\",
+        "Hash": "0F41477397CE5DED0DB06D2DB2E2D6A7BF3B71D2C62F59E3220493A3F62006CD5B574E6A6022B8A8DEC72F341266FDBE6CAAB664708234A2BA6384B605460C1D"
+      }
+    ]
+  },
+  "IsTracked": true
+}
