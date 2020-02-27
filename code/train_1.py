@@ -11,11 +11,14 @@ inputDataDir = sys.argv[1]
 validationFile = sys.argv[2]
 experiment_output_dir = sys.argv[3]
 dropoutRate = 0.2
-batchSize = 4
+batchSize = 2
+seed = 313143
 
-# valDf = pd.read_csv(validationFile)
-# valIds = set(valDf.image_id)
-# print("{0} samples will be used for validation".format(len(valIds)))
+#tf.autograph.set_verbosity(10)
+
+valDf = pd.read_csv(validationFile)
+valIds = set(valDf.image_id)
+print("{0} samples will be used for validation".format(len(valIds)))
 
 if __name__ == "__main__":    
     print("Data dir is {0}".format(inputDataDir))
@@ -36,15 +39,19 @@ if __name__ == "__main__":
 
     # reshaping to match the input shape
     def prepareInput(_,labels,pixels):
-        pixels = tf.cast(pixels, tf.float16)
+        pixels = tf.cast(pixels, tf.float32)
         root,vowel,consonant = tf.unstack(labels,3)
-        root = tf.one_hot(root, 168, dtype=tf.float16)
-        vowel = tf.one_hot(vowel, 11, dtype=tf.float16)
-        consonant = tf.one_hot(consonant, 7, dtype=tf.float16)
+        root = tf.one_hot(root, 168, dtype=tf.float32)
+        vowel = tf.one_hot(vowel, 11, dtype=tf.float32)
+        consonant = tf.one_hot(consonant, 7, dtype=tf.float32)
 
         colored = tf.tile(tf.expand_dims(pixels,-1),[1,1,3])
 
         pixels = tf.image.resize(colored, [224,224], method='gaussian')
+        #HEIGHT = 137
+        #WIDTH = 236
+
+        #pixels = tf.pad(colored,[[43,44],[0,0],[0,0]])[:,6:230,:]
         labelsDict = {
             "root": tf.reshape(root,(168,)),
             "vowel": tf.reshape(vowel,(11,)),
@@ -61,21 +68,23 @@ if __name__ == "__main__":
     def inTrainFilter(ident,_dummy_1,_dummy_2):
         return not(tf.py_function(inValidationFilter, [ident], (tf.bool)))
     
-    #trDs = ds.filter(inTrainFilter)
     trDs = constructAllSamplesDs()
+    trDs = trDs.filter(inTrainFilter)
     trDs = trDs.map(prepareInput) #tf.data.experimental.AUTOTUNE
     trDs = trDs.repeat()
-    trDs = trDs.shuffle(8192,seed=123678, reshuffle_each_iteration=True)
+    trDs = trDs.shuffle(8192,seed=seed+123678, reshuffle_each_iteration=True)
     trDs = trDs.batch(batchSize)
     trDs = trDs.prefetch(64)
 
-    # valDs = ds.filter(inValFilter)
-    # valDs = valDs.map(prepareInput, num_parallel_calls=1)    
-    # valDs = valDs.batch(batchSize)
+    valDs = constructAllSamplesDs()
+    valDs = valDs.filter(inValFilter)
+    valDs = valDs.map(prepareInput)    
+    valDs = valDs.batch(batchSize)
 
     print("Training dataSet is {0}".format(trDs))
+    print("Validation dataSet is {0}".format(valDs))
 
-    model = GetModel(dropoutRate)
+    model,cnn = GetModel(dropoutRate, seed+44)
 
     print("Model constructed")
     print(model.summary())
@@ -125,14 +134,14 @@ if __name__ == "__main__":
 
     #print("Fitting")
     model.fit(x = trDs, \
-      #validation_data = valDs,      
+      validation_data = valDs,      
       verbose = 1,
       callbacks=callbacks,
       shuffle=False, # dataset is shuffled explicilty
       #steps_per_epoch= (N-len(valIds))//batchSize ,
       steps_per_epoch= N//batchSize,
       #epochs=int(10000)
-      epochs = 10
+      epochs = 1
       )
 
     print("Saving final model")
