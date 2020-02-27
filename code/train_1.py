@@ -4,6 +4,7 @@ import tfDataIngest.tfDataSetParquetAnnotateTrain as tfDsParquetAnnotation
 import os
 import sys
 import pandas as pd
+from tqdm import tqdm
 from glob import glob
 from models.DenseNet121 import GetModel
 
@@ -11,8 +12,9 @@ inputDataDir = sys.argv[1]
 validationFile = sys.argv[2]
 experiment_output_dir = sys.argv[3]
 dropoutRate = 0.2
-batchSize = 2
+batchSize = 8
 seed = 313143
+cacheLocation = 'M:\\dsCache'
 
 #tf.autograph.set_verbosity(10)
 
@@ -21,6 +23,8 @@ valIds = set(valDf.image_id)
 print("{0} samples will be used for validation".format(len(valIds)))
 
 if __name__ == "__main__":    
+    tf.random.set_seed(seed+563)
+
     print("Data dir is {0}".format(inputDataDir))
     dataFileNames = glob("{0}/train*.parquet".format(inputDataDir))
     trainLabelsFileName = "{0}/train.csv".format(inputDataDir)
@@ -39,11 +43,11 @@ if __name__ == "__main__":
 
     # reshaping to match the input shape
     def prepareInput(_,labels,pixels):
-        pixels = tf.cast(pixels, tf.float32)
+        #pixels = tf.cast(pixels, tf.float32)
         root,vowel,consonant = tf.unstack(labels,3)
-        root = tf.one_hot(root, 168, dtype=tf.float32)
-        vowel = tf.one_hot(vowel, 11, dtype=tf.float32)
-        consonant = tf.one_hot(consonant, 7, dtype=tf.float32)
+        root = tf.one_hot(root, 168, dtype=tf.uint8)
+        vowel = tf.one_hot(vowel, 11, dtype=tf.uint8)
+        consonant = tf.one_hot(consonant, 7, dtype=tf.uint8)
 
         colored = tf.tile(tf.expand_dims(pixels,-1),[1,1,3])
 
@@ -68,18 +72,31 @@ if __name__ == "__main__":
     def inTrainFilter(ident,_dummy_1,_dummy_2):
         return not(tf.py_function(inValidationFilter, [ident], (tf.bool)))
     
-    trDs = constructAllSamplesDs()
-    trDs = trDs.filter(inTrainFilter)
-    trDs = trDs.map(prepareInput) #tf.data.experimental.AUTOTUNE
-    trDs = trDs.repeat()
-    trDs = trDs.shuffle(8192,seed=seed+123678, reshuffle_each_iteration=True)
-    trDs = trDs.batch(batchSize)
-    trDs = trDs.prefetch(64)
+    allDs = constructAllSamplesDs()
+    allDs = allDs.cache()
 
-    valDs = constructAllSamplesDs()
-    valDs = valDs.filter(inValFilter)
+    trDs = allDs.filter(inTrainFilter)    
+    trDs = trDs.map(prepareInput) #tf.data.experimental.AUTOTUNE
+    #trDs = trDs.take(1000)
+    #trDs = trDs.cache(os.path.join(cacheLocation,'trCache'))
+    
+
+    print("Caching all DS")
+    for element in tqdm(allDs.as_numpy_iterator()):
+       ()
+
+    trDs = trDs.repeat()
+    #trDs = trDs.prefetch(128)
+    trDs = trDs.shuffle(512,seed=seed+123678, reshuffle_each_iteration=True)    
+    trDs = trDs.batch(batchSize)
+    #trDs = trDs.prefetch(128)
+
+    #valDs = constructAllSamplesDs()
+    valDs = allDs.filter(inValFilter)
     valDs = valDs.map(prepareInput)    
     valDs = valDs.batch(batchSize)
+    #valDs = valDs.cache(os.path.join(cacheLocation,'vaCache'))
+    #valDs = valDs.cache()
 
     print("Training dataSet is {0}".format(trDs))
     print("Validation dataSet is {0}".format(valDs))
@@ -123,7 +140,7 @@ if __name__ == "__main__":
     csv_logger = tf.keras.callbacks.CSVLogger(os.path.join(experiment_output_dir,'training_log.csv'),append=True)
     callbacks = [
         # Interrupt training if `val_loss` stops improving for over 2 epochs
-        #tf.keras.callbacks.EarlyStopping(patience=int(7), monitor='loss',mode='min'),
+        #tf.keras.callbacks.EarlyStopping(patience=int(2), monitor='loss',mode='min'),
         # Write TensorBoard logs to `./logs` directory
         # tf.keras.callbacks.TensorBoard(log_dir=experiment_output_dir, histogram_freq = 0, profile_batch=0),
         tf.keras.callbacks.ModelCheckpoint(filepath=os.path.join(experiment_output_dir,"weights.{epoch:02d}-{loss:.5f}.hdf5"),verbose=True, save_weights_only=True),
@@ -132,16 +149,18 @@ if __name__ == "__main__":
         #reduce_lr
     ]
 
-    #print("Fitting")
+    spe = (N-len(valIds))//batchSize
+    print("Steps per epoch {0}".format(spe))
     model.fit(x = trDs, \
       validation_data = valDs,      
       verbose = 1,
       callbacks=callbacks,
       shuffle=False, # dataset is shuffled explicilty
-      #steps_per_epoch= (N-len(valIds))//batchSize ,
-      steps_per_epoch= N//batchSize,
+      steps_per_epoch= spe,
+      #steps_per_epoch= N//batchSize,
+      #steps_per_epoch= 4096,
       #epochs=int(10000)
-      epochs = 1
+      epochs = 5
       )
 
     print("Saving final model")

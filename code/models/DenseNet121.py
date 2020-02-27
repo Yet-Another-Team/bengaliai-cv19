@@ -7,7 +7,7 @@ def GetModel(dropoutRate,seed):
     model = tf.keras.applications.DenseNet121(weights='imagenet',include_top=False, pooling=None)
     model.trainable = False
     modelOutput = model(modelInputPreprocessed)
-    print("Model is {0}".format(modelOutput))
+    #print("Model is {0}".format(modelOutput))
     
     modelOutputDo = tf.keras.layers.Dropout(dropoutRate,noise_shape=(1, 1, 1024),seed= seed+1)(modelOutput)
     modelSqueezed = tf.keras.layers.Conv2D(filters=128,kernel_size=1,activation="selu",padding='valid')(modelOutputDo) #1024 -> 128 channels
