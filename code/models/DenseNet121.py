@@ -14,10 +14,10 @@ def GetModel(dropoutRate,seed):
     modelSqueezedStretched = tf.keras.layers.Reshape((7*7*128,),input_shape=(7,7,128))(modelSqueezed)
     modelSqueezedDo = tf.keras.layers.Dropout(dropoutRate,seed=seed+2)(modelSqueezedStretched)
     bottleNeck = tf.keras.layers.Dense(512,activation="selu")(modelSqueezedDo)
-    bottleNeckDo = tf.keras.layers.Dropout(dropoutRate,seed=seed+3)(bottleNeck)
+    bottleNeckDo = tf.keras.layers.Dropout(dropoutRate,seed=seed+3,name='bottleneckOut')(bottleNeck)
     rootDenseOutput = tf.keras.layers.Dense(168, name="root")(bottleNeckDo)
     vowelDenseOutput = tf.keras.layers.Dense(11, name="vowel")(bottleNeckDo)
     consonantDenseOutput = tf.keras.layers.Dense(7, name="consonant")(bottleNeckDo)
-    return tf.keras.Model(name="BengaliDenseNet121",inputs=modelInput, outputs=(rootDenseOutput, vowelDenseOutput, consonantDenseOutput)),model
+    return tf.keras.Model(name="BengaliDenseNet121",inputs=modelInput, outputs=(bottleNeckDo,rootDenseOutput, vowelDenseOutput, consonantDenseOutput)),model
     
     

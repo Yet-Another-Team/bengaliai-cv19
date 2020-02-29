@@ -1,8 +1,12 @@
 import tensorflow as tf
-import tfDataIngest.tfDataSetParquet as tfDsParquet
-import tfDataIngest.tfDataSetParquetAnnotateTrain as tfDsParquetAnnotation
-import os
+
 import sys
+import os
+sys.path.append(os.path.join(__file__,'..','..'))
+
+from tfDataIngest import tfDataSetParquet as tfDsParquet
+from tfDataIngest import tfDataSetParquetAnnotateTrain as tfDsParquetAnnotation
+import os
 import pandas as pd
 from tqdm import tqdm
 from glob import glob
@@ -14,9 +18,6 @@ experiment_output_dir = sys.argv[3]
 dropoutRate = 0.2
 batchSize = 8
 seed = 313143
-cacheLocation = 'M:\\dsCache'
-
-#tf.autograph.set_verbosity(10)
 
 valDf = pd.read_csv(validationFile)
 valIds = set(valDf.image_id)
@@ -73,6 +74,7 @@ if __name__ == "__main__":
         return not(tf.py_function(inValidationFilter, [ident], (tf.bool)))
     
     allDs = constructAllSamplesDs()
+    #allDs = allDs.take(10000)
     allDs = allDs.cache()
 
     trDs = allDs.filter(inTrainFilter)    
@@ -149,9 +151,10 @@ if __name__ == "__main__":
         #reduce_lr
     ]
 
-    spe = (N-len(valIds))//batchSize
+    #spe = (N-len(valIds))//batchSize
+    spe = 8000//batchSize
     print("Steps per epoch {0}".format(spe))
-    model.fit(x = trDs, \
+    fitHisotry = model.fit(x = trDs, \
       validation_data = valDs,      
       verbose = 1,
       callbacks=callbacks,
@@ -160,7 +163,7 @@ if __name__ == "__main__":
       #steps_per_epoch= N//batchSize,
       #steps_per_epoch= 4096,
       #epochs=int(10000)
-      epochs = 5
+      epochs = 2
       )
 
     print("Saving final model")
