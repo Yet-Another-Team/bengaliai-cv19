@@ -10,6 +10,7 @@ data/bengaliai-cv19/
 venv-gpu/
 // ---alpheus-managed-end---
 __pycache__
+**/.ipynb_checkpoints
 help
 venv-gpu
 .paket

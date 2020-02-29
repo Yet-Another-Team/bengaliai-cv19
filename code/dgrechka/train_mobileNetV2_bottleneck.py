@@ -10,7 +10,7 @@ import os
 import pandas as pd
 from tqdm import tqdm
 from glob import glob
-from models.DenseNet121 import GetModel
+from models.MobileNetV2 import GetModel
 
 inputDataDir = sys.argv[1]
 validationFile = sys.argv[2]
@@ -18,6 +18,8 @@ experiment_output_dir = sys.argv[3]
 dropoutRate = 0.2
 batchSize = 8
 seed = 313143
+
+print("validation set samples listing: {0}".format(validationFile))
 
 valDf = pd.read_csv(validationFile)
 valIds = set(valDf.image_id)
@@ -31,6 +33,7 @@ if __name__ == "__main__":
     trainLabelsFileName = "{0}/train.csv".format(inputDataDir)
 
     N = len(pd.read_csv(trainLabelsFileName))
+    #N = 5000
     print("There are {0} training samples in total".format(N))
 
     print("Parquet files count is {0}".format(len(dataFileNames)))
@@ -74,7 +77,7 @@ if __name__ == "__main__":
         return not(tf.py_function(inValidationFilter, [ident], (tf.bool)))
     
     allDs = constructAllSamplesDs()
-    #allDs = allDs.take(10000)
+    allDs = allDs.take(N)
     allDs = allDs.cache()
 
     trDs = allDs.filter(inTrainFilter)    
@@ -84,7 +87,8 @@ if __name__ == "__main__":
     
 
     print("Caching all DS")
-    for element in tqdm(allDs.as_numpy_iterator()):
+    #for element in tqdm(allDs.as_numpy_iterator(),ascii=True,total=N):
+    for element in allDs.as_numpy_iterator():
        ()
 
     trDs = trDs.repeat()
@@ -139,34 +143,36 @@ if __name__ == "__main__":
 
     print(model.summary())
 
-    csv_logger = tf.keras.callbacks.CSVLogger(os.path.join(experiment_output_dir,'training_log.csv'),append=True)
+    csv_logger = tf.keras.callbacks.CSVLogger(os.path.join(experiment_output_dir,'training_log.csv'),append=False)
     callbacks = [
         # Interrupt training if `val_loss` stops improving for over 2 epochs
-        #tf.keras.callbacks.EarlyStopping(patience=int(2), monitor='loss',mode='min'),
+        tf.keras.callbacks.EarlyStopping(patience=int(5), monitor='val_root_recall',mode='max'),
         # Write TensorBoard logs to `./logs` directory
         # tf.keras.callbacks.TensorBoard(log_dir=experiment_output_dir, histogram_freq = 0, profile_batch=0),
-        tf.keras.callbacks.ModelCheckpoint(filepath=os.path.join(experiment_output_dir,"weights.{epoch:02d}-{loss:.5f}.hdf5"),verbose=True, save_weights_only=True),
+        tf.keras.callbacks.ModelCheckpoint(
+            filepath=os.path.join(experiment_output_dir,"weights.hdf5"),
+            save_best_only=True,
+            verbose=True,
+            mode='max',
+            save_weights_only=True,
+            monitor='val_root_recall'),
         tf.keras.callbacks.TerminateOnNaN(),
         csv_logger,
         #reduce_lr
     ]
 
     #spe = (N-len(valIds))//batchSize
-    spe = 8000//batchSize
+    spe = N//batchSize
     print("Steps per epoch {0}".format(spe))
     fitHisotry = model.fit(x = trDs, \
       validation_data = valDs,      
-      verbose = 1,
+      verbose = 2,
       callbacks=callbacks,
       shuffle=False, # dataset is shuffled explicilty
       steps_per_epoch= spe,
       #steps_per_epoch= N//batchSize,
       #steps_per_epoch= 4096,
       #epochs=int(10000)
-      epochs = 2
-      )
-
-    print("Saving final model")
-    tf.saved_model.save(model, os.path.join(experiment_output_dir,'final/'))    
-
+      epochs = 10
+      )    
     print("Done")

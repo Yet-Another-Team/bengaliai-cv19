@@ -79,3 +79,7 @@ I'll use the F# script as I'm more confident in F#, but you can do it in python 
  > Notice: We produce the outputs with asteriks (*) in the path. It means that the output contains several files matching the pattern. That's called vector artefact.
 
  > Notice: We fixed number of folds equal to 5 (script parameter) in the build command above.
+
+```shell
+(venv-gpu) C:\ML\bengaliai-cv19>alpheus -v verbose build -rg gpu -d code\dgrechka\train_mobileNetV2_bottleneck.py -d data\bengaliai-cv19\ -d data\5foldCvSplits\*.val_ids.csv -d code\models\MobileNetV2.py -o experiment_outputs\dgrechka_1_mobileNetV2_bottleneck\*\ "python $in1 $in2 $in3 $out1"
+```

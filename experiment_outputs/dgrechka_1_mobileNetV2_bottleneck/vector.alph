@@ -1,0 +1,42 @@
+{
+  "FileFormatVersion": 1,
+  "Origin": {
+    "Case": "CommandOrigin",
+    "Fields": [
+      {
+        "Inputs": [
+          {
+            "RelativePath": "..\\..\\code\\dgrechka\\train_mobileNetV2_bottleneck.py",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\data\\bengaliai-cv19\\",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\data\\5foldCvSplits\\*.val_ids.csv",
+            "Hash": null
+          }
+        ],
+        "Outputs": [
+          {
+            "RelativePath": "*\\",
+            "Hash": null
+          }
+        ],
+        "ResourceGroups": [
+          "gpu"
+        ],
+        "SuccessfulExitCodes": [
+          0
+        ],
+        "OutputIndex": 0,
+        "WorkingDirectory": "..\\..",
+        "Command": "python $in1 $in2 $in3 $out1",
+        "Signature": "F6CAA8BF1432F2612D8F606B1A3636E90D52E58D",
+        "OutputsCleanDisabled": false
+      }
+    ]
+  },
+  "IsTracked": false
+}
