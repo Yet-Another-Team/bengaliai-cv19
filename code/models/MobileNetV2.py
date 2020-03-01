@@ -15,7 +15,7 @@ def GetModel(dropoutRate,seed):
     # modelSqueezedStretched = tf.keras.layers.Reshape((7*7*128,),input_shape=(7,7,128))(modelSqueezed)
     # modelSqueezedDo = tf.keras.layers.Dropout(dropoutRate,seed=seed+2)(modelSqueezedStretched)
 
-    bottleNeck = tf.keras.layers.Dense(256,activation="selu")(modelOutputDo)
+    bottleNeck = tf.keras.layers.Dense(512,activation="selu")(modelOutputDo)
     bottleNeckDo = tf.keras.layers.Dropout(dropoutRate,seed=seed+3,name='bottleneckOut')(bottleNeck)
     rootDenseOutput = tf.keras.layers.Dense(168, name="root")(bottleNeckDo)
     vowelDenseOutput = tf.keras.layers.Dense(11, name="vowel")(bottleNeckDo)

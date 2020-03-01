@@ -117,17 +117,67 @@ if __name__ == "__main__":
     def catCeFromLogits(y_true, y_pred):        
         return tf.keras.losses.categorical_crossentropy(y_true, y_pred, from_logits=True)    
 
+    class RecallForLogits2(tf.keras.metrics.Metric):
+        def __init__(self, name='recall', **kwargs):
+            self.M = 200
+            super(RecallForLogits, self).__init__(name=name, **kwargs)            
+            self.true_positives = self.add_weight(name='tp', initializer='zeros',shape=(self.M,))
+            self.false_negatives = self.add_weight(name='fn', initializer='zeros',shape=(self.M,))
+
+        def update_state(self, y_true, y_pred_logit, sample_weight=None):
+            # shape is: B x M(ClassesCount)
+            #y_pred_shape = tf.shape(y_pred_logit)
+            #B = y_pred_shape[0]
+            idx_max = tf.math.argmax(y_pred_logit,1) # (B,)
+            
+            y_pred_bool = tf.one_hot(idx_max,self.M,on_value=True, off_value=False) # BxM
+
+            #print("y_pred_bool shape: {0}".format(y_pred_bool.shape))
+            #y_pred_bool = tf.expand_dims(y_pred_bool,0)
+            #y_pred_bool = tf.tile(y_pred_bool,[B,1])
+
+            y_true_bool = tf.cast(y_true,dtype=tf.bool)
+            
+            not_pred_bool = tf.math.logical_not(y_pred_bool)
+
+
+            localTP = tf.math.reduce_sum(tf.cast(tf.math.logical_and(y_pred_bool,y_true_bool),dtype=tf.float32),0) # along Batch
+            localFN = tf.math.reduce_sum(tf.cast(tf.math.logical_and(not_pred_bool,y_true_bool),dtype=tf.float32),0) # along Batch
+
+            # print("true_positives shape: {0}".format(self.true_positives.shape))
+            # print("false_negatives shape: {0}".format(self.false_negatives.shape))
+            # print("localTP shape: {0}".format(localTP.shape))
+            # print("localFN shape: {0}".format(localFN.shape))
+
+            self.true_positives.assign_add(localTP)
+            self.false_negatives.assign_add(localFN)   
+
+        def result(self):
+            print("result self.true_positives shape: {0}".format(self.true_positives.shape))
+            nom = tf.cast(self.true_positives,dtype=tf.float32) # shape (M,)
+            denom = tf.cast(self.true_positives + self.false_negatives,dtype=tf.float32) # shape (M,)            
+            print("denom shape: {0}".format(denom.shape))
+            perClassRecall = tf.cond(denom < 0.5, lambda: tf.zeros([self.M],dtype=tf.float32), lambda: nom/denom)
+            print("perClassRecall shape: {0}".format(perClassRecall.shape))
+            macroRecallNom = tf.math.reduce_sum(perClassRecall)
+            print("macroRecallNom shape: {0}".format(macroRecallNom.shape))
+            macroRecallDenom = tf.reduce_sum(tf.cast(denom > 0.0,dtype=tf.float32))
+            print("macroRecallDenom shape: {0}".format(macroRecallDenom.shape))
+            macroRecall = macroRecallNom/macroRecallDenom
+            print("macroRecall shape: {0}".format(macroRecall.shape))
+            return macroRecall
+    
     class RecallForLogits(tf.keras.metrics.Recall):
         def __init__(self, name='recall', **kwargs):
             super(RecallForLogits, self).__init__(name=name, **kwargs)            
 
         def update_state(self, y_true, y_pred, sample_weight=None):
-            probs = tf.sigmoid(y_pred)
+            probs = tf.nn.softmax(y_pred)
             super().update_state(y_true, probs, sample_weight)            
 
         def result(self):
             return super().result()
-    
+
     model.compile(
           #optimizer=tf.keras.optimizers.SGD(momentum=.5,nesterov=True, clipnorm=1.),
           #optimizer=tf.keras.optimizers.RMSprop(),
@@ -146,23 +196,23 @@ if __name__ == "__main__":
     csv_logger = tf.keras.callbacks.CSVLogger(os.path.join(experiment_output_dir,'training_log.csv'),append=False)
     callbacks = [
         # Interrupt training if `val_loss` stops improving for over 2 epochs
-        tf.keras.callbacks.EarlyStopping(patience=int(5), monitor='val_root_recall',mode='max'),
+        tf.keras.callbacks.EarlyStopping(patience=int(5), monitor='root_loss',mode='min'),
         # Write TensorBoard logs to `./logs` directory
         # tf.keras.callbacks.TensorBoard(log_dir=experiment_output_dir, histogram_freq = 0, profile_batch=0),
         tf.keras.callbacks.ModelCheckpoint(
             filepath=os.path.join(experiment_output_dir,"weights.hdf5"),
             save_best_only=True,
             verbose=True,
-            mode='max',
+            mode='min',
             save_weights_only=True,
-            monitor='val_root_recall'),
+            monitor='root_loss'),
         tf.keras.callbacks.TerminateOnNaN(),
         csv_logger,
         #reduce_lr
     ]
 
-    #spe = (N-len(valIds))//batchSize
-    spe = N//batchSize
+    spe = (N-len(valIds))//batchSize
+    #spe = N//batchSize
     print("Steps per epoch {0}".format(spe))
     fitHisotry = model.fit(x = trDs, \
       validation_data = valDs,      
