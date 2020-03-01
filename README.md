@@ -83,3 +83,7 @@ I'll use the F# script as I'm more confident in F#, but you can do it in python 
 ```shell
 (venv-gpu) C:\ML\bengaliai-cv19>alpheus -v verbose build -rg gpu -d code\dgrechka\train_mobileNetV2_bottleneck.py -d data\bengaliai-cv19\ -d data\5foldCvSplits\*.val_ids.csv -d code\models\MobileNetV2.py -o experiment_outputs\dgrechka_1_mobileNetV2_bottleneck\*\ "python $in1 $in2 $in3 $out1"
 ```
+
+```shell
+(venv-gpu) C:\ML\bengaliai-cv19>alpheus -v verbose build -rg gpu -d code\dgrechka\train_mobileNetV2_full.py -d data\bengaliai-cv19\ -d data\5foldCvSplits\*.val_ids.csv -d experiment_outputs\dgrechka_1_mobileNetV2_bottleneck\*\ -d code\tfDataIngest\tfDataSetParquet.py -d code\tfDataIngest\tfDataSetParquetAnnotateTrain.py -d code\models\MobileNetV2.py -d code\tfMetrics\macroAveragedRecallForLogits.py -o experiment_outputs\dgrechka_2_mobileNetV2_full_transfer_learning\*\ "python $in1 $in2 $in3 $in4 $out1"
+```
