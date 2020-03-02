@@ -1,0 +1,62 @@
+{
+  "FileFormatVersion": 1,
+  "Origin": {
+    "Case": "CommandOrigin",
+    "Fields": [
+      {
+        "Inputs": [
+          {
+            "RelativePath": "..\\..\\code\\dgrechka\\train_NASNetMobile_full.py",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\data\\bengaliai-cv19\\",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\data\\5foldCvSplits\\*.val_ids.csv",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\dgrechka_2_NASNetMobile_bottleneck\\*\\",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\code\\tfDataIngest\\tfDataSetParquet.py",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\code\\tfDataIngest\\tfDataSetParquetAnnotateTrain.py",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\code\\models\\NASNetMobile.py",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\code\\tfMetrics\\macroAveragedRecallForLogits.py",
+            "Hash": null
+          }
+        ],
+        "Outputs": [
+          {
+            "RelativePath": "*\\",
+            "Hash": null
+          }
+        ],
+        "ResourceGroups": [
+          "gpu"
+        ],
+        "SuccessfulExitCodes": [
+          0
+        ],
+        "OutputIndex": 0,
+        "WorkingDirectory": "..\\..",
+        "Command": "python $in1 $in2 $in3 $in4 $out1",
+        "Signature": "A336E8EFE2FD090D0D5FBFA71C8C540DF6F46ECF",
+        "OutputsCleanDisabled": false
+      }
+    ]
+  },
+  "IsTracked": false
+}

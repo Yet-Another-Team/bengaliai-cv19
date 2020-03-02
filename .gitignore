@@ -8,6 +8,7 @@ data/5foldCvSplits/*.vowel_stats.csv
 data/bengaliai-cv19.zip
 data/bengaliai-cv19/
 experiment_outputs/dgrechka_1_mobileNetV2_bottleneck/*/
+experiment_outputs/dgrechka_2_NASNetMobile_bottleneck/*/
 venv-gpu/
 // ---alpheus-managed-end---
 __pycache__
