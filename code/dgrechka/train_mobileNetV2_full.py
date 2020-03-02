@@ -142,7 +142,7 @@ if __name__ == "__main__":
     csv_logger = tf.keras.callbacks.CSVLogger(os.path.join(experiment_output_dir,'training_log.csv'),append=False)
     callbacks = [
         # Interrupt training if `val_loss` stops improving for over 2 epochs
-        tf.keras.callbacks.EarlyStopping(patience=int(20), monitor='val_root_recall',mode='max'),
+        tf.keras.callbacks.EarlyStopping(patience=int(10), monitor='val_root_recall',mode='max'),
         # Write TensorBoard logs to `./logs` directory
         # tf.keras.callbacks.TensorBoard(log_dir=experiment_output_dir, histogram_freq = 0, profile_batch=0),
         tf.keras.callbacks.ModelCheckpoint(
@@ -154,7 +154,7 @@ if __name__ == "__main__":
             monitor='val_root_recall'),
         tf.keras.callbacks.TerminateOnNaN(),
         csv_logger,
-        tf.keras.callbacks.ReduceLROnPlateau(monitor='val_root_recall', factor=0.1, patience=10, min_lr=1e-7,mode='max')
+        tf.keras.callbacks.ReduceLROnPlateau(monitor='val_root_recall', factor=0.1, patience=5, min_lr=1e-7,mode='max')
     ]
 
     spe = (N-len(valIds))//batchSize
@@ -169,6 +169,6 @@ if __name__ == "__main__":
       #steps_per_epoch= N//batchSize,
       #steps_per_epoch= 4096,
       #epochs=int(10000)
-      epochs = 100
+      epochs = 50
       )    
     print("Done")

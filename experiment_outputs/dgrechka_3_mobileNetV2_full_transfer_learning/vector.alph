@@ -1,0 +1,68 @@
+{
+  "FileFormatVersion": 1,
+  "Origin": {
+    "Case": "CommandOrigin",
+    "Fields": [
+      {
+        "Inputs": [
+          {
+            "RelativePath": "..\\..\\code\\dgrechka\\train_mobileNetV2_full.py",
+            "Hash": "2102DCA39646A7DD9A08F1CEF7150F0C11C969522D43420E1BCD539A467F13F25C7B16F45EA22661A3BAF85C6F77146840568F7976F7F86224545713B9DAA6D5"
+          },
+          {
+            "RelativePath": "..\\..\\data\\bengaliai-cv19\\",
+            "Hash": "D09946D9348B9135927E3C69F22AFB441F5EA040995229E4119F6B3B6DC10537DE1BF1FA6850A5BCFA1C90849BDA14AEC20B69EC410422F558CDA8CBE0A5362F"
+          },
+          {
+            "RelativePath": "..\\..\\data\\5foldCvSplits\\*.val_ids.csv",
+            "Hash": {
+              "1": "541369BD74236A263A5A7525C712B57836D98C183F442D1C96A366C55D7443FFE7543B7F5A6D11EDCFD1202040D441A2C64861AD0C8CB74307D58ECB6138FD95"
+            }
+          },
+          {
+            "RelativePath": "..\\dgrechka_1_mobileNetV2_bottleneck\\*\\",
+            "Hash": {
+              "1": "EE49D8199878D697EFE1E7A5A36A1C5E32DAB9041D75A0C01EF3BEC3C4A742BBC37A3D2ACE66FA30FE00CE9356E27B4467FED8F1FC60E5B5392963CA3F9BA84B"
+            }
+          },
+          {
+            "RelativePath": "..\\..\\code\\tfDataIngest\\tfDataSetParquet.py",
+            "Hash": "2A1123333AA05FE72A5ABAFD3D792A4793F6D97F7A2798FA4E85E854CD1A08F7B8D20CE9FCD9C1D1719AF77C9145DCEC3587C7CACD1AD497DF26FF7EE333ADC0"
+          },
+          {
+            "RelativePath": "..\\..\\code\\tfDataIngest\\tfDataSetParquetAnnotateTrain.py",
+            "Hash": "1E73A8FCF0B94A4A9F02883CA67C6343DEE46E3616AF3A3397B2CEF77AC54F3F565E3902590391A711956F9E074DEEF45FB80D286DFDAD21A59CFF738B327800"
+          },
+          {
+            "RelativePath": "..\\..\\code\\models\\MobileNetV2.py",
+            "Hash": "8DD32140AD92901860FBCC32BFF1BC6DAECF7344936654001BF88E8CB14A18BFA97707B675289CAA6D0178769C1F81DFD48C805401FDAF2566A380D13408BBE2"
+          },
+          {
+            "RelativePath": "..\\..\\code\\tfMetrics\\macroAveragedRecallForLogits.py",
+            "Hash": "390F7DAE9CD506008D2613E3683B8E9D065CE1A1A26FFCB5FA186457BEB13C08B54FAEE849618C91617119B816172E85A9D82B432243A3C17B6AE32C543605E0"
+          }
+        ],
+        "Outputs": [
+          {
+            "RelativePath": "*\\",
+            "Hash": {
+              "1": "5B5F30162B4FAF8EFAF7384DB37405F866DC1FF1B4D19805C2117C5A8F08C7F41FFF8A929950F3CC71497259F4F5C6A74A1E197ACAFB030889B316522B676AB6"
+            }
+          }
+        ],
+        "ResourceGroups": [
+          "gpu"
+        ],
+        "SuccessfulExitCodes": [
+          0
+        ],
+        "OutputIndex": 0,
+        "WorkingDirectory": "..\\..",
+        "Command": "python $in1 $in2 $in3 $in4 $out1",
+        "Signature": "A336E8EFE2FD090D0D5FBFA71C8C540DF6F46ECF",
+        "OutputsCleanDisabled": false
+      }
+    ]
+  },
+  "IsTracked": false
+}
