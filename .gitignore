@@ -5,6 +5,7 @@ data/5foldCvSplits/*.consonant_stats.csv
 data/5foldCvSplits/*.root_stats.csv
 data/5foldCvSplits/*.val_ids.csv
 data/5foldCvSplits/*.vowel_stats.csv
+data/bengaliai-cv19-png-preview/
 data/bengaliai-cv19.zip
 data/bengaliai-cv19/
 experiment_outputs/dgrechka_1_mobileNetV2_bottleneck/*/
