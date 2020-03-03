@@ -7,41 +7,47 @@
         "Inputs": [
           {
             "RelativePath": "..\\..\\code\\dgrechka\\train_NASNetMobile_full.py",
-            "Hash": null
+            "Hash": "6D1D1C524753B759525804A80AF7B9DE6ED847CBC94B295DF246298BC6AFEBB2712B054ACE761500DE7B6EC798F33A958DEB2F0A9886B363BFF03EA3D28CB044"
           },
           {
             "RelativePath": "..\\..\\data\\bengaliai-cv19\\",
-            "Hash": null
+            "Hash": "D09946D9348B9135927E3C69F22AFB441F5EA040995229E4119F6B3B6DC10537DE1BF1FA6850A5BCFA1C90849BDA14AEC20B69EC410422F558CDA8CBE0A5362F"
           },
           {
             "RelativePath": "..\\..\\data\\5foldCvSplits\\*.val_ids.csv",
-            "Hash": null
+            "Hash": {
+              "3": "5A708C1F023A3B8EDB9E31ADC9D95D66DA1428532643F6EC05F895A55982B0EE30FD0EC741E7DB122ED94A559C10D4A55CC2C6F149FFBAA11E34E85E0EA8B6B0"
+            }
           },
           {
             "RelativePath": "..\\dgrechka_2_NASNetMobile_bottleneck\\*\\",
-            "Hash": null
+            "Hash": {
+              "3": "B605D3EA64AC6BC93E213DDB8043C1A97E91614FD97D84BDB9607806695E8A608D9A79025D9BABD87F7B18C8DBBC44D411404AEC7EF7A2EF676CBDE38821B616"
+            }
           },
           {
             "RelativePath": "..\\..\\code\\tfDataIngest\\tfDataSetParquet.py",
-            "Hash": null
+            "Hash": "2A1123333AA05FE72A5ABAFD3D792A4793F6D97F7A2798FA4E85E854CD1A08F7B8D20CE9FCD9C1D1719AF77C9145DCEC3587C7CACD1AD497DF26FF7EE333ADC0"
           },
           {
             "RelativePath": "..\\..\\code\\tfDataIngest\\tfDataSetParquetAnnotateTrain.py",
-            "Hash": null
+            "Hash": "1E73A8FCF0B94A4A9F02883CA67C6343DEE46E3616AF3A3397B2CEF77AC54F3F565E3902590391A711956F9E074DEEF45FB80D286DFDAD21A59CFF738B327800"
           },
           {
             "RelativePath": "..\\..\\code\\models\\NASNetMobile.py",
-            "Hash": null
+            "Hash": "817396CA3E415CE9ACFFB2532DFBB1DF0C4A4FB68BA15A34E0DBA2FFCD821958795E5A97005C6FF86F72ED8A9F725331D8F829247B97B68233DEB2C6C93AF707"
           },
           {
             "RelativePath": "..\\..\\code\\tfMetrics\\macroAveragedRecallForLogits.py",
-            "Hash": null
+            "Hash": "390F7DAE9CD506008D2613E3683B8E9D065CE1A1A26FFCB5FA186457BEB13C08B54FAEE849618C91617119B816172E85A9D82B432243A3C17B6AE32C543605E0"
           }
         ],
         "Outputs": [
           {
             "RelativePath": "*\\",
-            "Hash": null
+            "Hash": {
+              "3": "83716EECE2C21C7A3F5D24B7EA2A97E1F8BF504EB9B7D6C28903747B259B7D8A151A61451631FF4553745D1AEBAB676DD31F54AE909143882F0B0938E94FEDC0"
+            }
           }
         ],
         "ResourceGroups": [
@@ -53,7 +59,7 @@
         "OutputIndex": 0,
         "WorkingDirectory": "..\\..",
         "Command": "python $in1 $in2 $in3 $in4 $out1",
-        "Signature": "A336E8EFE2FD090D0D5FBFA71C8C540DF6F46ECF",
+        "Signature": "BF05913C5C3619384F19AB86DC010D8A7C4D85D7",
         "OutputsCleanDisabled": false
       }
     ]
