@@ -1,0 +1,40 @@
+{
+  "FileFormatVersion": 1,
+  "Origin": {
+    "Case": "CommandOrigin",
+    "Fields": [
+      {
+        "Inputs": [
+          {
+            "RelativePath": "..\\code\\scripts\\GeneratePNG_Preview_shear.py",
+            "Hash": "0CFC6D02DB6CB2F3718C3E803EC2D70EEC7B8456377D9FD7E993C83B4FC58D797B543D06C9FDA7564D07694307C2E026A16A895C9B662EEB9465409C7ED2EA73"
+          },
+          {
+            "RelativePath": "bengaliai-cv19\\",
+            "Hash": "D09946D9348B9135927E3C69F22AFB441F5EA040995229E4119F6B3B6DC10537DE1BF1FA6850A5BCFA1C90849BDA14AEC20B69EC410422F558CDA8CBE0A5362F"
+          },
+          {
+            "RelativePath": "..\\code\\tfDataIngest\\tfDataSetParquet.py",
+            "Hash": "2A1123333AA05FE72A5ABAFD3D792A4793F6D97F7A2798FA4E85E854CD1A08F7B8D20CE9FCD9C1D1719AF77C9145DCEC3587C7CACD1AD497DF26FF7EE333ADC0"
+          }
+        ],
+        "Outputs": [
+          {
+            "RelativePath": "bengaliai-cv19-png-shear-preview\\",
+            "Hash": "B1998596E5228004B45CE7731B76C227000DC8C94647534E64FC096DE86152F7FBA01AB6CBE6DF33529CD855ABE38E94E885AE4ABC83540ED418BC8E6E8FD06A"
+          }
+        ],
+        "ResourceGroups": [],
+        "SuccessfulExitCodes": [
+          0
+        ],
+        "OutputIndex": 0,
+        "WorkingDirectory": "..",
+        "Command": "python $in1 $in2 $out1",
+        "Signature": "B31E2C9B4EF92C4D36B1324FA936EEA88B024841",
+        "OutputsCleanDisabled": false
+      }
+    ]
+  },
+  "IsTracked": true
+}
