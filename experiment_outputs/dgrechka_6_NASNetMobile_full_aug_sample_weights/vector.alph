@@ -1,0 +1,78 @@
+{
+  "FileFormatVersion": 1,
+  "Origin": {
+    "Case": "CommandOrigin",
+    "Fields": [
+      {
+        "Inputs": [
+          {
+            "RelativePath": "..\\..\\code\\dgrechka\\train_NASNetMobile_full_shear_cls_weights.py",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\data\\bengaliai-cv19\\",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\data\\5foldCvSplits\\*.val_ids.csv",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\initialDataAnalysis\\GraphemeRootPriorProbs.csv",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\initialDataAnalysis\\VowelDiacriticPriorProbs.csv",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\initialDataAnalysis\\ConsonantDiacriticPriorProbs.csv",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\dgrechka_2_NASNetMobile_bottleneck\\*\\",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\code\\models\\NASNetMobile.py",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\code\\tfDataIngest\\tfDataSetParquetAnnotateTrainP.py",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\code\\tfDataIngest\\tfDataSetParquetP_uint8.py",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\code\\tfMetrics\\macroAveragedRecallForLogits.py",
+            "Hash": null
+          },
+          {
+            "RelativePath": "..\\..\\code\\tfDataTransform\\sampleWeights.py",
+            "Hash": null
+          }
+        ],
+        "Outputs": [
+          {
+            "RelativePath": "*\\",
+            "Hash": null
+          }
+        ],
+        "ResourceGroups": [
+          "gpu"
+        ],
+        "SuccessfulExitCodes": [
+          0
+        ],
+        "OutputIndex": 0,
+        "WorkingDirectory": "..\\..",
+        "Command": "python $in1 $in2 $in3 $in4 $in5 $in6 $in7 $out1",
+        "Signature": "446F334BEF408BBF66D5267F5B0737E17828F90F",
+        "OutputsCleanDisabled": false
+      }
+    ]
+  },
+  "IsTracked": false
+}

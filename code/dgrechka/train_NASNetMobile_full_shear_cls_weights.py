@@ -5,21 +5,26 @@ import sys
 import os
 sys.path.append(os.path.join(__file__,'..','..'))
 
-from tfDataIngest import tfDataSetParquetP as tfDsParquet
+from tfDataIngest import tfDataSetParquetP_uint8 as tfDsParquet
 from tfDataIngest import tfDataSetParquetAnnotateTrainP as tfDsParquetAnnotation
+from tfDataTransform import sampleWeights as tfSampleWeights
 from tfMetrics.macroAveragedRecallForLogits import RecallForLogits
 import os
 import pandas as pd
+import numpy as np
 from tqdm import tqdm
 from glob import glob
 from models.NASNetMobile import GetModel
 
 inputDataDir = sys.argv[1]
 validationFile = sys.argv[2]
-checkpointFile = os.path.join(sys.argv[3],"weights.hdf5")
-experiment_output_dir = sys.argv[4]
+rootStatsFile = sys.argv[3]
+vowelStatsFile = sys.argv[4]
+consonantStatsFile = sys.argv[5]
+checkpointFile = os.path.join(sys.argv[6],"weights.hdf5")
+experiment_output_dir = sys.argv[7]
 dropoutRate = 0.2
-batchSize = 64
+batchSize = 16
 seed = 313143
 
 print("validation set samples listing: {0}".format(validationFile))
@@ -27,6 +32,17 @@ print("validation set samples listing: {0}".format(validationFile))
 valDf = pd.read_csv(validationFile)
 valIds = set(valDf.image_id)
 print("{0} samples will be used for validation".format(len(valIds)))
+
+
+def getClassWeightsTensor(statsFilename):
+    statsDf = pd.read_csv(statsFilename)
+    colNames = list(statsDf)
+    statsDf = statsDf.sort_values(by=colNames[0])
+    nparr= statsDf.to_numpy(dtype=np.float32)
+    #print("class idx asc stats array:")
+    #print(nparr)    
+    return tfSampleWeights.GetClassWeights(nparr[:,2])
+
 
 if __name__ == "__main__":    
     tf.random.set_seed(seed+563)
@@ -38,6 +54,14 @@ if __name__ == "__main__":
     print("Available GPUs: {0}".format(gpus))
     print("Available CPUs: {0}".format(tf.config.experimental.list_physical_devices('CPU')))
     tf.config.experimental.set_memory_growth(gpus[0], True)
+
+    #print("Root")
+    rootClsWeights = getClassWeightsTensor(rootStatsFile)
+    #print("Vowel")
+    vowelClsWeights = getClassWeightsTensor(vowelStatsFile)
+    #print("Consonant")
+    consonantClsWeights = getClassWeightsTensor(consonantStatsFile)
+
 
     print("Data dir is {0}".format(inputDataDir))
     dataFileNames = glob("{0}/train*.parquet".format(inputDataDir))
@@ -77,6 +101,18 @@ if __name__ == "__main__":
             "consonant": tf.reshape(consonant,(7,))
         }
         return pixels, labelsDict
+
+    def addSampleWeights(pixels,labelsDict):
+        rootOH = labelsDict["root"]
+        vowelOH = labelsDict["vowel"]
+        consonantOH = labelsDict["consonant"]
+        weightsDict = {
+            "root": tfSampleWeights.GetSampleWeightsFromClassWeights(rootClsWeights, rootOH),
+            "vowel": tfSampleWeights.GetSampleWeightsFromClassWeights(vowelClsWeights,vowelOH),
+            "consonant": tfSampleWeights.GetSampleWeightsFromClassWeights(consonantClsWeights,consonantOH)
+        }
+        print("Sample weights shape is {0}".format(weightsDict["root"].shape))
+        return pixels,labelsDict,weightsDict
 
     def shear(sampleId,labels, pixels):        
         #shearFactor = tf.random.uniform([2],minval= -0.2,maxval=0.2,seed=seed)
@@ -130,8 +166,9 @@ if __name__ == "__main__":
     trDs = trDs.repeat()
     trDs = trDs.shuffle(1024,seed=seed+123678, reshuffle_each_iteration=True)
     trDs = trDs.map(shear,num_parallel_calls=tf.data.experimental.AUTOTUNE)
-    trDs = trDs.map(prepareInput,num_parallel_calls=tf.data.experimental.AUTOTUNE) # num_parallel_calls=tf.data.experimental.AUTOTUNE
+    trDs = trDs.map(prepareInput,num_parallel_calls=tf.data.experimental.AUTOTUNE) # num_parallel_calls=tf.data.experimental.AUTOTUNE    
     trDs = trDs.batch(batchSize)
+    trDs = trDs.map(addSampleWeights, num_parallel_calls=tf.data.experimental.AUTOTUNE)
     #trDs = trDs.with_options(options)
     
 
@@ -143,6 +180,7 @@ if __name__ == "__main__":
     #valDs = valDs.cache()
     valDs = valDs.map(prepareInput,num_parallel_calls=tf.data.experimental.AUTOTUNE)
     valDs = valDs.batch(batchSize)
+    valDs = valDs.map(addSampleWeights, num_parallel_calls=tf.data.experimental.AUTOTUNE)
 
 
     #valDs = valDs.prefetch(8)
@@ -185,7 +223,7 @@ if __name__ == "__main__":
     csv_logger = tf.keras.callbacks.CSVLogger(os.path.join(experiment_output_dir,'training_log.csv'),append=False)
     callbacks = [
         # Interrupt training if `val_loss` stops improving for over 2 epochs
-        tf.keras.callbacks.EarlyStopping(patience=int(10), monitor='val_root_recall',mode='max'),
+        tf.keras.callbacks.EarlyStopping(patience=int(6), monitor='val_root_recall',mode='max'),
         # Write TensorBoard logs to `./logs` directory
         # tf.keras.callbacks.TensorBoard(log_dir=experiment_output_dir, histogram_freq = 0, profile_batch=0),
         tf.keras.callbacks.ModelCheckpoint(
@@ -197,7 +235,7 @@ if __name__ == "__main__":
             monitor='val_root_recall'),
         tf.keras.callbacks.TerminateOnNaN(),
         csv_logger,
-        tf.keras.callbacks.ReduceLROnPlateau(monitor='val_root_recall', factor=0.1, patience=5, min_lr=1e-7,mode='max',verbose = 1)
+        tf.keras.callbacks.ReduceLROnPlateau(monitor='val_root_recall', factor=0.1, patience=3, min_lr=1e-7,mode='max',verbose = 1)
     ]
 
     spe = (N-len(valIds))//batchSize 
@@ -218,6 +256,6 @@ if __name__ == "__main__":
         shuffle=False, # dataset is shuffled explicilty
         steps_per_epoch= spe,
         validation_steps= vaSteps,
-        epochs = 75
+        epochs = 50
         )    
     print("Done")

@@ -87,3 +87,7 @@ I'll use the F# script as I'm more confident in F#, but you can do it in python 
 ```shell
 (venv-gpu) C:\ML\bengaliai-cv19>alpheus -v verbose build -rg gpu -d code\dgrechka\train_mobileNetV2_full.py -d data\bengaliai-cv19\ -d data\5foldCvSplits\*.val_ids.csv -d experiment_outputs\dgrechka_1_mobileNetV2_bottleneck\*\ -d code\tfDataIngest\tfDataSetParquet.py -d code\tfDataIngest\tfDataSetParquetAnnotateTrain.py -d code\models\MobileNetV2.py -d code\tfMetrics\macroAveragedRecallForLogits.py -o experiment_outputs\dgrechka_2_mobileNetV2_full_transfer_learning\*\ "python $in1 $in2 $in3 $in4 $out1"
 ```
+
+```shell
+alpheus -v verbose build -rg gpu -d code\dgrechka\train_NASNetMobile_full_shear_cls_weights.py -d data\bengaliai-cv19\ -d data\5foldCvSplits\*.val_ids.csv -d initialDataAnalysis\GraphemeRootPriorProbs.csv -d initialDataAnalysis\VowelDiacriticPriorProbs.csv -d initialDataAnalysis\ConsonantDiacriticPriorProbs.csv -d experiment_outputs\dgrechka_2_NASNetMobile_bottleneck\*\ -o experiment_outputs\dgrechka_6_NASNetMobile_full_aug_sample_weights\*\ -d code\models\NASNetMobile.py -d code\tfDataIngest\tfDataSetParquetAnnotateTrainP.py -d code\tfDataIngest\tfDataSetParquetP_uint8.py -d code\tfMetrics\macroAveragedRecallForLogits.py -d code\tfDataTransform\sampleWeights.py "python $in1 $in2 $in3 $in4 $in5 $in6 $in7 $out1"
+```
