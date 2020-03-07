@@ -10,6 +10,7 @@ data/bengaliai-cv19.zip
 data/bengaliai-cv19/
 experiment_outputs/dgrechka_1_mobileNetV2_bottleneck/*/
 experiment_outputs/dgrechka_2_NASNetMobile_bottleneck/*/
+experiment_outputs/dgrechka_3_mobileNetV2_full_transfer_learning/*/
 venv-gpu/
 // ---alpheus-managed-end---
 __pycache__
