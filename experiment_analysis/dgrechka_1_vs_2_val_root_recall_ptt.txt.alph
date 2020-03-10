@@ -1,0 +1,40 @@
+{
+  "FileFormatVersion": 1,
+  "Origin": {
+    "Case": "CommandOrigin",
+    "Fields": [
+      {
+        "Inputs": [
+          {
+            "RelativePath": "..\\code\\scripts\\TrainResultsPairedTTest.R",
+            "Hash": "A984C1C14FE60CD72527BB3F60D6FF318195CF193668A701CCA2D0FD3B3D815C2110FD533CCA2FBFA3FEDF1003757DDE6C2D9F4B3106AEF5D4EF0B775466A174"
+          },
+          {
+            "RelativePath": "..\\experiment_outputs\\dgrechka_1_mobileNetV2_bottleneck\\",
+            "Hash": "14F8964D016126B55B5499D537503CE397CF915030B3D1093B4C2DFF09C9F14C86BCEBD1E0E2C57FDE6418352DE5A2BE8CEA9FFE193A897E0A603B956CEA56F1"
+          },
+          {
+            "RelativePath": "..\\experiment_outputs\\dgrechka_2_NASNetMobile_bottleneck\\",
+            "Hash": "F192052E7768382F3759E79231636DD613B44A01DC933D13B4B27819B4EE5C873B792BF683A1FA52D73D035415CD16AFA0537E519524740912801D0FD89973AA"
+          }
+        ],
+        "Outputs": [
+          {
+            "RelativePath": "dgrechka_1_vs_2_val_root_recall_ptt.txt",
+            "Hash": "D189E235AA79815171E93E8E0A3EC247213D36572E3A35BEF384FA55C12A6642790B14E986A3CDAB23349A124B44022FC5BC13992F8E9942947AAD7FCD862274"
+          }
+        ],
+        "ResourceGroups": [],
+        "SuccessfulExitCodes": [
+          0
+        ],
+        "OutputIndex": 0,
+        "WorkingDirectory": "..",
+        "Command": "RScript $in1 $in2 $in3 val_root_recall $out1",
+        "Signature": "6F3E7164FBE786C949B0078DC4EB9B94CB713916",
+        "OutputsCleanDisabled": false
+      }
+    ]
+  },
+  "IsTracked": false
+}
