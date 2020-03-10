@@ -1,0 +1,17 @@
+[1] "Metric is val_consonant_recall"
+[1] "Model 1 metric values:"
+[1] 0.9788027 0.9736853 0.9776699 0.9768788 0.9774963
+[1] "Model 2 metric values:"
+[1] 0.9828866 0.9789044 0.9786552 0.9813108 0.9783205
+
+	Paired t-test
+
+data:  Model1 and Model2
+t = -3.3837, df = 4, p-value = 0.02769
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.0056599014 -0.0005579306
+sample estimates:
+mean of the differences 
+           -0.003108916 
+

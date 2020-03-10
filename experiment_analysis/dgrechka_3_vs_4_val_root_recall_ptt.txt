@@ -1,0 +1,17 @@
+[1] "Metric is val_root_recall"
+[1] "Model 1 metric values:"
+[1] 0.9456109 0.9484019 0.9478297 0.9543793 0.9520505
+[1] "Model 2 metric values:"
+[1] 0.9633590 0.9651384 0.9579268 0.9640311 0.9625909
+
+	Paired t-test
+
+data:  Model1 and Model2
+t = -7.347, df = 4, p-value = 0.001828
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.017850423 -0.008059149
+sample estimates:
+mean of the differences 
+            -0.01295479 
+
