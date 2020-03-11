@@ -1,0 +1,40 @@
+{
+  "FileFormatVersion": 1,
+  "Origin": {
+    "Case": "CommandOrigin",
+    "Fields": [
+      {
+        "Inputs": [
+          {
+            "RelativePath": "..\\code\\scripts\\TrainResultsPairedTTest.R",
+            "Hash": "C0E237C7100C5033869910A79A4B6831E417B2250C3D330D2F6C1D27A140FC93E3DDA61184B3F6EEA6BEF5C0C62F0AB10865CFF7B8E5EC8CEFDAEC7988124712"
+          },
+          {
+            "RelativePath": "..\\experiment_outputs\\dgrechka_4_NASNetMobile_full_transfer_learning\\",
+            "Hash": "AB64A20CAA7FB4460421AE4A237899B8E028FCF46BED38420D106901E517382E4AE5D6DEE9CB9265337DC78AB6604842775BF2B339E7613C3805433B19122E7D"
+          },
+          {
+            "RelativePath": "..\\experiment_outputs\\dgrechka_5_NASNetMobile_full_tr_len_shear_auh\\",
+            "Hash": "B2E6E02B67009A6916A70615BE1451136033F39A3C38639E272E2F298EAD39A1D2068E0101D9B8B81F562FD97EBF5D36A540E1EF1829E09E1D5BAD454E3551E3"
+          }
+        ],
+        "Outputs": [
+          {
+            "RelativePath": "dgrechka_4_vs_5_val_root_recall_ptt.txt",
+            "Hash": "B2C24D61C8A13C737F3C6C52F0CFAFF61A4899F2136AC541F94DC1C6F5B40F6DDEAB4DA21FE3F8FB51A4929DDDAA841871723BCD0C17BE176D9710FAA61AD3FF"
+          }
+        ],
+        "ResourceGroups": [],
+        "SuccessfulExitCodes": [
+          0
+        ],
+        "OutputIndex": 0,
+        "WorkingDirectory": "..",
+        "Command": "RScript $in1 $in2 $in3 $out1 val_root_recall",
+        "Signature": "9244B3A79DEC81F10815CDBD6EF50F2FF1168691",
+        "OutputsCleanDisabled": false
+      }
+    ]
+  },
+  "IsTracked": false
+}

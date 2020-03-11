@@ -20,9 +20,22 @@ Non-trainable params: 4,269,716
 
 ### Transfer learning (part 2): Continuing to train will all parameters trainable
 
+NASNetMobile
+Total params: 4,906,318
+Trainable params: 4,869,580
+Non-trainable params: 36,738
+
 ## 2020-03-10
 
-Experiment 4 (NASNet full transfer) showed better metrics than 3 (MobileNet full transfer)
+Experiment dgrechka_4 (NASNet full transfer) showed better metrics than dgrechka_3 (MobileNet full transfer)
 Paired T-test for validation macro recall showed significance for all tree classifications separately.
 See experiment analysis.
 
+## 2020-03-11
+
+Experiment dgrechka_4 (NASNet full transfer) and dgrechka_5 (NASNet full transfer + shear augmentation) comparison using paired t-tests.
+val_root_recall:        **4 is better than 5.    p-value = 0.001091**
+val_vowel_recall:       not a significant change.   p-value = 0.1032
+val_consonant_recall:   not a signigicant change.   p-value = 0.05222
+
+So we can consider dgrechka_4(NASNet full transfer; dropout rate 0.2) as the best.

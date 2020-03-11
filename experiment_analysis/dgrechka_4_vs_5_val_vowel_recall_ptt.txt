@@ -1,0 +1,17 @@
+[1] "Metric that was maximized during training val_root_recall"
+[1] "Metric T-tested val_vowel_recall"
+[1] 0.9853899 0.9838749 0.9836547 0.9872237 0.9862928
+[1] "Model 2 metric values:"
+[1] 0.9843660 0.9826691 0.9844224 0.9842281 0.9840426
+
+	Paired t-test
+
+data:  Model1 and Model2
+t = 2.1042, df = 4, p-value = 0.1032
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.0004285978  0.0031117178
+sample estimates:
+mean of the differences 
+             0.00134156 
+
