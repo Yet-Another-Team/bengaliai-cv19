@@ -12,6 +12,7 @@ experiment_outputs/dgrechka_1_mobileNetV2_bottleneck/*/
 experiment_outputs/dgrechka_2_NASNetMobile_bottleneck/*/
 experiment_outputs/dgrechka_3_mobileNetV2_full_transfer_learning/*/
 experiment_outputs/dgrechka_4_NASNetMobile_full_transfer_learning/*/
+experiment_outputs/dgrechka_5_NASNetMobile_full_tr_len_shear_auh/*/
 venv-gpu/
 // ---alpheus-managed-end---
 __pycache__
