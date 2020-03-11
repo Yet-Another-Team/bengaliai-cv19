@@ -7,7 +7,7 @@
         "Inputs": [
           {
             "RelativePath": "..\\code\\scripts\\TrainResultsPairedTTest.R",
-            "Hash": "A984C1C14FE60CD72527BB3F60D6FF318195CF193668A701CCA2D0FD3B3D815C2110FD533CCA2FBFA3FEDF1003757DDE6C2D9F4B3106AEF5D4EF0B775466A174"
+            "Hash": "C0E237C7100C5033869910A79A4B6831E417B2250C3D330D2F6C1D27A140FC93E3DDA61184B3F6EEA6BEF5C0C62F0AB10865CFF7B8E5EC8CEFDAEC7988124712"
           },
           {
             "RelativePath": "..\\experiment_outputs\\dgrechka_3_mobileNetV2_full_transfer_learning\\",
@@ -21,7 +21,7 @@
         "Outputs": [
           {
             "RelativePath": "dgrechka_3_vs_4_val_root_recall_ptt.txt",
-            "Hash": "EFC2CE6E479F4A86DAC3772D7E43586DA01DF2E334BC01B2C27B2E64DD9DF689EEC33868C26BC8E6D6FA468637D1107B723F886BF4F458A8DEACEB273029361A"
+            "Hash": "8E26AD0E2DF38EDE915735288F83D200A435245FD05DB1B54C6C145DB7B03CE776FEEF3FFE7DEF3819D69F4E00DA445FCD851227B286F55730AA12FBF371755E"
           }
         ],
         "ResourceGroups": [],
@@ -30,8 +30,8 @@
         ],
         "OutputIndex": 0,
         "WorkingDirectory": "..",
-        "Command": "RScript $in1 $in2 $in3 val_root_recall $out1",
-        "Signature": "C803BDC64D82B33453200E1243D1DC8847387604",
+        "Command": "RScript $in1 $in2 $in3 $out1 val_root_recall",
+        "Signature": "818CFF3EE5326204D721B22FE0523CA2ED06FBFF",
         "OutputsCleanDisabled": false
       }
     ]

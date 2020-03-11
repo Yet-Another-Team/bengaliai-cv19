@@ -19,3 +19,10 @@ Trainable params: 636,602
 Non-trainable params: 4,269,716
 
 ### Transfer learning (part 2): Continuing to train will all parameters trainable
+
+## 2020-03-10
+
+Experiment 4 (NASNet full transfer) showed better metrics than 3 (MobileNet full transfer)
+Paired T-test for validation macro recall showed significance for all tree classifications separately.
+See experiment analysis.
+

@@ -1,5 +1,5 @@
-[1] "Metric is val_root_recall"
-[1] "Model 1 metric values:"
+[1] "Metric that was maximized during training val_root_recall"
+[1] "Metric T-tested val_root_recall"
 [1] 7.422068e-05 4.986909e-05 9.973819e-05 1.246727e-04 2.244109e-04
 [1] "Model 2 metric values:"
 [1] 0.0008411678 0.0017952874 0.0006233637 0.0033412292 0.0013215310

@@ -7,7 +7,7 @@
         "Inputs": [
           {
             "RelativePath": "..\\code\\scripts\\TrainResultsPairedTTest.R",
-            "Hash": "A984C1C14FE60CD72527BB3F60D6FF318195CF193668A701CCA2D0FD3B3D815C2110FD533CCA2FBFA3FEDF1003757DDE6C2D9F4B3106AEF5D4EF0B775466A174"
+            "Hash": "C0E237C7100C5033869910A79A4B6831E417B2250C3D330D2F6C1D27A140FC93E3DDA61184B3F6EEA6BEF5C0C62F0AB10865CFF7B8E5EC8CEFDAEC7988124712"
           },
           {
             "RelativePath": "..\\experiment_outputs\\dgrechka_3_mobileNetV2_full_transfer_learning\\",
@@ -21,7 +21,7 @@
         "Outputs": [
           {
             "RelativePath": "dgrechka_3_vs_4_val_consonant_recall_ptt.txt",
-            "Hash": "B17E29C714EE1274E7E856CBECC51527D4691754A58EB8CBB9090305DFABB29970B63EA1C064E00EB1513CBEC27442EF0E102F686F326818843AA80089EE2F11"
+            "Hash": "E58EE8553073EE2150AEE73341D8BA04881EA47B7E20EF1B474C4F7B4A94E697799C61F7425F5D256824509C6F0E7274805A6CF59B169139CE190332F96DC8F6"
           }
         ],
         "ResourceGroups": [],
@@ -30,8 +30,8 @@
         ],
         "OutputIndex": 0,
         "WorkingDirectory": "..",
-        "Command": "RScript $in1 $in2 $in3 val_consonant_recall $out1",
-        "Signature": "C5937184AB389007897218819C1C476FD0002A57",
+        "Command": "RScript $in1 $in2 $in3 $out1 val_consonant_recall",
+        "Signature": "D3146EA1FFA36B693660C3122BEC7E2F9AF2E232",
         "OutputsCleanDisabled": false
       }
     ]
