@@ -95,3 +95,11 @@ alpheus -v verbose build -rg gpu -d code\dgrechka\train_NASNetMobile_full_shear_
 ```shell
 alpheus build -d code\scripts\TrainResultsPairedTTest.R -d experiment_outputs\dgrechka_1_mobileNetV2_bottleneck\ -d experiment_outputs\dgrechka_2_NASNetMobile_bottleneck\ -o experiment_analysis\dgrechka_1_vs_2_val_root_recall_ptt.txt RScript $in1 $in2 $in3 val_root_recall $out1
 ```
+
+```shell
+alpheus -v verbose build -rg memory -d code\dgrechka\predict_bottleneck_4.py -d data\bengaliai-cv19\ -d data\5foldCvSplits\*.val_ids.csv -d experiment_outputs\dgrechka_4_NASNetMobile_full_transfer_learning\*\weights.hdf5 -o data\bottlenecks\dgrechka_4\*.extracted_features.npz -d code\tfDataIngest\tfDataSetParquet.py -d code\tfDataIngest\tfDataSetParquetAnnotateTrain.py -d code\models\NASNetMobile.py "python $in1 $in2 $in3 $in4 $out1"
+```
+
+```shell
+alpheus -v verbose build -rg cpu -d code\trainCaretXgboostTree.R -d data\bottlenecks\dgrechka_4\*.extracted_features.npz -o experiment_outputs\dgrechka_10_xgboost_train_bn_dgrechka_4\*\ "RScript $in1 $in2 $out1"
+```

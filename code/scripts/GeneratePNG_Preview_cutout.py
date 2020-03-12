@@ -17,7 +17,7 @@ seed = 3213434
 
 # pixels shape is 137x236
 # we will cut outabout 1/4 of heigh = 35x35        
-cutoutSize = 40
+cutoutSize = 32
 HEIGHT = 137
 WIDTH = 236
 
@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
         blackMaskApplied = tf.math.maximum(0.0,tf.cast(pixels,dtype=tf.float32) - floatMask*255.0)
 
-        grayMaskApplied = blackMaskApplied + floatMask*64.0
+        grayMaskApplied = blackMaskApplied + floatMask*224.0
 
         return grayMaskApplied
 
