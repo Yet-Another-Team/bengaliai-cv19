@@ -8,6 +8,7 @@ data/5foldCvSplits/*.vowel_stats.csv
 data/bengaliai-cv19-png-preview/
 data/bengaliai-cv19.zip
 data/bengaliai-cv19/
+data/bottlenecks/dgrechka_4/*.extracted_features.npz
 experiment_outputs/dgrechka_1_mobileNetV2_bottleneck/*/
 experiment_outputs/dgrechka_2_NASNetMobile_bottleneck/*/
 experiment_outputs/dgrechka_3_mobileNetV2_full_transfer_learning/*/
