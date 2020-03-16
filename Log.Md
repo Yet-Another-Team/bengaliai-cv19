@@ -39,3 +39,18 @@ val_vowel_recall:       not a significant change.   p-value = 0.1032
 val_consonant_recall:   not a signigicant change.   p-value = 0.05222
 
 So we can consider dgrechka_4(NASNet full transfer; dropout rate 0.2) as the best.
+
+## 2020-03-12
+
+Experiment dgrechka_4 and dgrechka_9. Only 2 folds.
+
+Paired t-test
+
+data:  c(0.9736702, 0.972164325) and c(0.969694425, 0.9683993)
+t = 36.73, df = 1, p-value = 0.01733
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 0.002531484 0.005209316
+sample estimates:
+mean of the differences 
+              0.0038704

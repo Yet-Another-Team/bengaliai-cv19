@@ -7,7 +7,7 @@
         "Inputs": [
           {
             "RelativePath": "..\\..\\code\\dgrechka\\train_NASNetMobile_full_cls_weights.py",
-            "Hash": "899DB810906B31E70C577E68574287D528813F118A022693DCADB4A06077CF0D69502F90C60D4975D8C8CB355B32CF9B78561BE59411A45AE47CFBF02D777395"
+            "Hash": "271E99D00145D587BEBC41D1C628B96ECCBD5BC600A8785F8FDCCF092F91B93BC1F5787D4F434EE3A240079ADA6C32F222857A88ECED4B71F469689D8094F64F"
           },
           {
             "RelativePath": "..\\..\\data\\bengaliai-cv19\\",
@@ -63,7 +63,9 @@
         "Outputs": [
           {
             "RelativePath": "*\\",
-            "Hash": "Null"
+            "Hash": {
+              "1": "FB9783A3F7CFE30F0347E0B362EC10061B6AD0B80F3B65732008AC7023B46E81FB7DC7FFF5917788E803B6466B15733109208C1F059B4422905C53446BDEF9D3"
+            }
           }
         ],
         "ResourceGroups": [
@@ -75,10 +77,10 @@
         "OutputIndex": 0,
         "WorkingDirectory": "..\\..",
         "Command": "python $in1 $in2 $in3 $in4 $in5 $in6 $in7 $out1",
-        "Signature": "446F334BEF408BBF66D5267F5B0737E17828F90F",
+        "Signature": "1F7E8261870BC07DA8BB66C549DCBC478180AAC5",
         "OutputsCleanDisabled": false
       }
     ]
   },
-  "IsTracked": false
+  "IsTracked": true
 }

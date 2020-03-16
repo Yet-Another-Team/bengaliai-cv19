@@ -9,11 +9,13 @@ data/bengaliai-cv19-png-preview/
 data/bengaliai-cv19.zip
 data/bengaliai-cv19/
 data/bottlenecks/dgrechka_4/*.extracted_features.npz
+experiment_outputs/dgrechka_11_NASNetMobile_full_sample_weights_cutout/*/
 experiment_outputs/dgrechka_1_mobileNetV2_bottleneck/*/
 experiment_outputs/dgrechka_2_NASNetMobile_bottleneck/*/
 experiment_outputs/dgrechka_3_mobileNetV2_full_transfer_learning/*/
 experiment_outputs/dgrechka_4_NASNetMobile_full_transfer_learning/*/
 experiment_outputs/dgrechka_5_NASNetMobile_full_tr_len_shear_auh/*/
+experiment_outputs/dgrechka_8_NASNetMobile_full_sample_weights/*/
 venv-gpu/
 // ---alpheus-managed-end---
 __pycache__

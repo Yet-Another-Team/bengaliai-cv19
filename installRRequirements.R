@@ -1,1 +1,1 @@
-install.packages(c("ggplot2",'plyr','caret',"xgboost","reticulate","e1071"))
+install.packages(c("ggplot2",'plyr','caret',"xgboost","reticulate","e1071","doParralel"))

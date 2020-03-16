@@ -60,7 +60,7 @@ if __name__ == "__main__":
 
         grayMaskApplied = blackMaskApplied + floatMask*224.0
 
-        return grayMaskApplied
+        return tf.cast(grayMaskApplied,dtype=tf.uint8)
 
         
 
@@ -76,7 +76,7 @@ if __name__ == "__main__":
         sampleId,pixels = element
         sampleId = sampleId.decode("utf-8")
         fileName = os.path.join(outputDir,"{0}-{1}.png".format(sampleId,idx))
-        png.from_array(pixels.astype(np.uint8), mode="L").save(fileName)
+        png.from_array(pixels, mode="L").save(fileName)
         #print("Image saved")
         #print(element)
         #print("sample name is {0}".format(sampleId))
