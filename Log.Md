@@ -54,3 +54,10 @@ alternative hypothesis: true difference in means is not equal to 0
 sample estimates:
 mean of the differences 
               0.0038704
+
+## 2020-03-17
+
+Experiment dgrechka_4 (NASNet full transfer) and dgrechka_11 (NASNet full transfer + cutout augmentation + sample weighting) comparison using paired t-tests.
+val_root_recall:        **11 is better than 4**     p-value = 0.0003465
+val_vowel_recall:       **11 is better than 4**     p-value = 0.01921
+val_consonant_recall:   **11 is better than 4**     p-value = 0.003713

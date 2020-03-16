@@ -1,0 +1,40 @@
+{
+  "FileFormatVersion": 1,
+  "Origin": {
+    "Case": "CommandOrigin",
+    "Fields": [
+      {
+        "Inputs": [
+          {
+            "RelativePath": "..\\code\\scripts\\TrainResultsPairedTTest.R",
+            "Hash": "C0E237C7100C5033869910A79A4B6831E417B2250C3D330D2F6C1D27A140FC93E3DDA61184B3F6EEA6BEF5C0C62F0AB10865CFF7B8E5EC8CEFDAEC7988124712"
+          },
+          {
+            "RelativePath": "..\\experiment_outputs\\dgrechka_4_NASNetMobile_full_transfer_learning\\",
+            "Hash": "AB64A20CAA7FB4460421AE4A237899B8E028FCF46BED38420D106901E517382E4AE5D6DEE9CB9265337DC78AB6604842775BF2B339E7613C3805433B19122E7D"
+          },
+          {
+            "RelativePath": "..\\experiment_outputs\\dgrechka_11_NASNetMobile_full_sample_weights_cutout\\",
+            "Hash": "755C9D545CF79B853BE82AA3CA3A7957F8256368DC991AE5FFDA2E037746114BF9BE6893B19EC9E5DF20F09E0156EBDCF6DA8BC053BF4BAE8114B4968DF09342"
+          }
+        ],
+        "Outputs": [
+          {
+            "RelativePath": "dgrechka_4_vs_11_val_consonant_recall_ptt.txt",
+            "Hash": "EC1BDA8368DAD194CFF908629A5E26BF8943469DCCF9AFF8AB6D6EEC7EBC92E355D22EA0EEF2B6F3B570AEC75B9F46172155DD8F81EB9CE937F2BE6D84FAF33C"
+          }
+        ],
+        "ResourceGroups": [],
+        "SuccessfulExitCodes": [
+          0
+        ],
+        "OutputIndex": 0,
+        "WorkingDirectory": "..",
+        "Command": "RScript $in1 $in2 $in3 $out1 val_consonant_recall",
+        "Signature": "6B6BB72DFE90EB7623EA30767462BF3E9C2F7F60",
+        "OutputsCleanDisabled": false
+      }
+    ]
+  },
+  "IsTracked": false
+}
